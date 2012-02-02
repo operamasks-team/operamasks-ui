@@ -1,0 +1,264 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>operamasks-ui omCalendar tests</title> 
+ 
+<script type="text/javascript" src="../../../jquery.js"></script> 
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="../../../ui/om-calendar.js" ></script> 
+<script type="text/javascript" src="../../../ui/om-panel.js" ></script>
+<script type="text/javascript" src="../../../ui/om-tabs.js" ></script> 
+<script type="text/javascript" src="../../../tests/common/js/test.js" ></script> 
+<link rel="stylesheet" type="text/css" href="../../../tests/common/css/test-all.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-all.css" /> 
+<script type="text/javascript" > 
+    function fmtDate(d){
+        return (d.getFullYear())+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日';
+    }
+    $(document).ready(function() { 
+         // ****************option test***************************
+    	 $('#calendar_editable').omCalendar({
+             editable:false
+         });
+         
+         /**
+    	 $('#calendar_date').omCalendar({
+             date : new Date(2011, 3, 5)
+         });
+    	 $('#calendar_dateFormat').omCalendar({
+             dateFormat : 'mm月dd日/yy年'
+         });
+    	 $('#calendar_disabled').omCalendar({
+    	     disabled : true
+    	 });
+    	 $('#calendar_disabledDays').omCalendar({
+             disabledDays : [0,3]
+         });
+    	 $('#calendar_disabledFn').omCalendar({
+             disabledFn : function(date){
+                var now = new Date();
+                if (date > now) {
+                    return false;
+                }
+             }
+         });
+    	 $('#calendar_maxDate').omCalendar({
+             maxDate : new Date(2011, 0, 5)
+         });
+    	 $('#calendar_minDate').omCalendar({
+             minDate : new Date(2011, 0, 5)
+         });
+    	 $('#calendar_pages').omCalendar({
+             pages : 3
+         });
+    	 $('#calendar_popup').omCalendar({
+             popup : false
+         });
+    	 $('#calendar_showTime').omCalendar({
+             showTime : true
+         });
+    	 $('#calendar_startDay').omCalendar({
+             startDay : 4
+         });
+    	 $('#calendar_readOnly').omCalendar({
+    	     date : new Date(2011, 9, 20),
+             readOnly : true
+         });
+         
+         
+         // ****************method test***************************
+    	 $('#calendar_disable_enable').omCalendar({});
+    	 $('#calendar_getDate_setDate').omCalendar({});
+    	 $('#calendar_onSelect').omCalendar({
+    	     onSelect:function(date) {
+    	       alert('你选择的日期为:'+fmtDate(date));
+    	     }
+    	 });
+    	 */
+    }); 
+</script> 
+ 
+</head> 
+<body> 
+  <div class="total">
+		Calendar测试案例，API属性总共 <span class="apiNo" number="1"></span> 个；
+		功能测试案例总共 <span class="funcNo" style="font-weight: bold;"></span> 个；
+		边界值测试案例总共 <span class="borderNo" style="font-weight: bold;"></span> 个
+  </div>
+  
+ <div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">属性测试</a></li>
+		<li><a href="#tabs-2">功能测试</a></li>
+		<li><a href="#tabs-3">边界值测试</a></li>
+	</ul>
+	<div id="tabs-1">
+	   <div id="testPoint1" class="testPoint">
+            <span class="title">属性测试点1：测试editable属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">不可以输入，只能通过下拉框选择日期</div>
+            <div class="tpDIV">
+                <input id="calendar_editable">
+            </div>
+        </div>
+        <!-- 
+		<div id="testPoint1" class="testPoint">
+			<span class="title">属性测试点1：测试date属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">展开日期选择框，默认选择的日期不是今天而是“2011-04-05”</div>
+			<div class="tpDIV">
+				<input id="calendar_date">
+			</div>
+	    </div>
+	    <div id="testPoint2" class="testPoint">
+            <span class="title">属性测试点2：测试dateFormat属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">选择一个日期后，输入框里显示成"mm月dd日/yy年"这种形式</div>
+            <div class="tpDIV">
+                <input id="calendar_dateFormat">
+            </div>
+        </div>
+        
+        <div id="testPoint3" class="testPoint">
+            <span class="title">属性测试点3：测试disabled属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">组件禁用</div>
+            <div class="tpDIV">
+                <input id="calendar_disabled">
+            </div>
+        </div>
+        <div id="testPoint3" class="testPoint">
+            <span class="title">属性测试点4：测试disabledDays属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">不允许选择周日和周三</div>
+            <div class="tpDIV">
+                <input id="calendar_disabledDays">
+            </div>
+        </div>
+        
+        <div id="testPoint4" class="testPoint">
+            <span class="title">属性测试点5：测试disabledFn属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">不允许选择今天以后的日期</div>
+            <div class="tpDIV">
+                <input id="calendar_disabledFn">
+            </div>
+        </div>
+        <div id="testPoint5" class="testPoint">
+            <span class="title">属性测试点6：测试maxDate属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">不允许选择2011年1月5日之后的日期</div>
+            <div class="tpDIV">
+                <input id="calendar_maxDate">
+            </div>
+        </div>
+        <div id="testPoint6" class="testPoint">
+            <span class="title">属性测试点7：测试minDate属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">不允许选择2011年1月5日之前的日期</div>
+            <div class="tpDIV">
+                <input id="calendar_minDate">
+            </div>
+        </div>
+        <div id="testPoint7" class="testPoint">
+            <span class="title">属性测试点8：测试pages属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">日期选择框一次显示3个月</div>
+            <div class="tpDIV">
+                <input id="calendar_pages">
+            </div>
+        </div>
+        <div id="testPoint8" class="testPoint">
+            <span class="title">属性测试点9：测试popup属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">没有输入框，直接在页面上显示日历控件</div>
+            <div class="tpDIV">
+                <div id="calendar_popup" ></div>
+            </div>
+        </div>
+        <div id="testPoint9" class="testPoint">
+            <span class="title">属性测试点10：测试showTime属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">日历中会显示出选择时间的部分，点确定会回填到输入框中的内容也包含时间部分</div>
+            <div class="tpDIV">
+                <input id="calendar_showTime">
+            </div>
+        </div>
+        <div id="testPoint10" class="testPoint">
+            <span class="title">属性测试点11：测试startDay属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">日历中一周不是从周日开始，而是从周四开始</div>
+            <div class="tpDIV">
+                <input id="calendar_startDay">
+            </div>
+        </div>
+        <div id="testPoint11" class="testPoint">
+            <span class="title">属性测试点12：测试readOnly属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">日历只读</div>
+            <div class="tpDIV">
+                <input id="calendar_readOnly">
+            </div>
+        </div>
+         -->
+	</div>
+	
+	<div id="tabs-2">
+	   <!-- 
+        <div class="testPoint">
+            <span class="title">功能测试点1：测试disable()和enable()方法</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">默认时组件可用,点击disabled按钮后不可用（得不到焦点，不可输入，也不可点击trigger弹出日历）。点击enable按钮后可用（可得到焦点，可输入，也可点击trigger弹出日历）</div>
+            <div  class="tpDIV">
+                <input id="calendar_disable_enable">
+                <button onclick="$('#calendar_disable_enable').omCalendar('disable');">disable</button>
+                <button onclick="$('#calendar_disable_enable').omCalendar('enable');">enable</button>
+            </div>
+        </div>
+        <div class="testPoint">
+            <span class="title">功能测试点2：测试setDate(date)和getDate()方法</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击第一个按钮后再展开日历，默认选择的日期为2012年1月1日。点击第二个按钮会显示出日历中当前选中的日期</div>
+            <div  class="tpDIV">
+                <input id="calendar_getDate_setDate">
+                <button onclick="$('#calendar_getDate_setDate').omCalendar('setDate',new Date(2012, 0, 1));">set date to 2012-01-01</button>
+                <button onclick="var d=$('#calendar_getDate_setDate').omCalendar('getDate');alert(fmtDate(d));">show date</button>
+            </div>
+        </div>
+        <div class="testPoint">
+            <span class="title">功能测试点3：测试onSelect事件</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">选择一个日期后会提示刚选择的日期</div>
+            <div  class="tpDIV">
+                <input id="calendar_onSelect">
+            </div>
+        </div>
+         -->
+	</div>
+	
+	<div id="tabs-3">
+		
+	</div>
+	
+</div>
+
+	
+</body> 
+</html>

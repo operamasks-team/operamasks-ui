@@ -1,0 +1,897 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>operamasks-ui om-tabs tests</title> 
+ 
+<script type="text/javascript" src="/operamasks-ui/jquery.js"></script> 
+<script type="text/javascript" src="/operamasks-ui/ui/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="/operamasks-ui/ui/om-tabs.js" ></script> 
+<script type="text/javascript" src="/operamasks-ui/ui/om-panel.js" ></script> 
+<script type="text/javascript" src="/operamasks-ui/tests/common/js/test.js" ></script> 
+<link rel="stylesheet" type="text/css" href="/operamasks-ui/tests/common/css/test-all.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-theme.css" /> 
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-panel.css" /> 
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-tabs.css" /> 
+ <style type="text/css">
+ 	.width-ruler{
+ 		height: 14px;
+ 		background-color: red;
+ 		font-weight: bold;
+ 		text-align: center;
+ 		margin-top: 5px;
+ 	}
+ 	.height-ruler{
+ 		background-color: red;
+ 		font-weight: bold;
+ 		margin-left: 5px;
+ 		width: 14px;
+ 	}
+ 	table{
+ 		table-layout: fixed;
+ 	}
+ 	.om-panel-body p{
+ 		padding-left: 15px;
+ 		margin-top:20px;
+ 		margin-bottom:20px;
+ 	}
+ </style>
+<script type="text/javascript" > 
+    $(document).ready(function() { 
+		 // test option
+		$('#test-tabs-interval').omTabs({autoPlay:true,interval:3000});
+        $('#test-tabs-autoPlay').omTabs({autoPlay:true});
+        /**
+        $('#test-tabs-width').omTabs({width:'500px'});
+        $('#test-tabs-height').omTabs({height:200});
+        $('#test-tabs-border').omTabs({border:false});
+        $('#test-tabs-tabWidth').omTabs({tabWidth:130});
+        $('#test-tabs-tabHeight').omTabs({tabHeight:40});
+        $('#test-tabs-scrollable-1').omTabs({scrollable:true,width:'300px'});
+        $('#test-tabs-scrollable-2').omTabs({scrollable:false,width:'300px'});
+        $('#test-tabs-closable').omTabs({closable:true});
+        $('#test-tabs-switchMode-1').omTabs({switchMode:'mouseover'});
+        $('#test-tabs-switchMode-2').omTabs({switchMode:'click'});
+       
+        $('#test-tabs-active').omTabs({active:1});
+        $('#test-tabs-lazyload').omTabs({
+        	lazyLoad:true,
+        	onLoadComplete:function(tabId){
+        		var index = $('#test-tabs-lazyload').omTabs('getAlter', tabId) + 1;
+                if(index == 2){
+	                alert('第2个页签加载完毕');
+                }
+        	}
+        });
+        **/
+        
+	    // test method
+	    $('#test-tabs-method-add').omTabs({
+	    	onBeforeAdd:function(){alert('onBeforeAdd')},
+	    	onAdd:function(){alert('onAdd')}
+    	});
+	    $('#test-tabs-method-close').omTabs({
+	    	onBeforeClose:function(){alert('onBeforeClose')},
+	    	onClose:function(){alert('onClose')}
+    	});
+	    $('#test-tabs-method-closeAll').omTabs({
+	    	onBeforeCloseAll:function(){alert('onBeforeCloseAll')},
+	    	onCloseAll:function(){alert('onCloseAll')}
+    	});
+	    $('#test-tabs-method-activate').omTabs({
+	    	onActivate:function(){alert('onActivate')},
+	    	onBeforeActivate:function(){alert('onBeforeActivate')}
+	    });
+	    $('#test-tabs-method-getAlter').omTabs();
+	    $('#test-tabs-method-setDataSource').omTabs();
+
+	    
+	    // test limit
+	    $('#test-tabs-limit-nest').omTabs();
+	    $('#test-tabs-limit-nest-1').omTabs({width:'90%',height:200});
+	    $('#test-tabs-limit-nest-1-1').omTabs({width:'90%',height:100});
+	    $('#test-tabs-limit-nest-2').omTabs({width:'90%',height:200});
+	    $('#test-tabs-limit-nest-3').omTabs({width:'90%',height:200});
+	    $('#test-tabs-limit-width').omTabs({width:-1});
+	    $('#test-tabs-limit-height').omTabs({height:-1});
+	    $('#test-tabs-limit-tabWidth').omTabs({tabWidth:-1});
+	    $('#test-tabs-limit-tabHeight').omTabs({tabHeight:-1});
+	    //$('#test-tabs-limit-active-1').omTabs({active:-1});
+	    //$('#test-tabs-limit-active-2').omTabs({active:100});
+	    //$('#test-tabs-limit-closable').omTabs({closable:[1,2,3]});
+	    
+    }); 
+    
+    function addTabs(){
+    	$('#test-tabs-method-add').omTabs('add',{title:'New Title',content:'New Content'});
+    }
+    function closeTabs(){
+    	$('#test-tabs-method-close').omTabs('close',0);
+    }
+    function closeAllTabs(){
+    	$('#test-tabs-method-closeAll').omTabs('closeAll',0);
+    }
+    function activateTab(){
+    	$('#test-tabs-method-activate').omTabs('activate',1);
+    }
+    function getActivatedTabs(){
+    	alert($('#test-tabs-method-activate').omTabs('getActivated'));
+    }
+    function getActivatedTabIndex(){
+    	var activatedId = $('#test-tabs-method-getAlter').omTabs('getActivated');
+    	alert($('#test-tabs-method-getAlter').omTabs('getAlter',activatedId));
+    }
+    function getLength(){
+    	alert($('#test-tabs-method-activate').omTabs('getLength'));
+    }
+    function setTabsDataSource(){
+    	$('#test-tabs-method-setDataSource').omTabs('setDataSource',{
+    	    index : 1,
+    	    url : './frame.html'
+    	});
+    	$('#test-tabs-method-setDataSource').omTabs('reload',1);
+    	return false;
+    }
+</script> 
+ 
+</head> 
+<body> 
+  <div class="total">
+		tabs测试案例，API属性总共 <span class="apiNo" number="2">2</span> 个；
+		功能测试案例总共 <span class="funcNo" style="font-weight: bold;" ></span> 个；
+		边界值测试案例总共 <span class="borderNo" style="font-weight: bold;" ></span> 个
+  </div>
+  
+ <div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">属性测试</a></li>
+		<li><a href="#tabs-2">功能测试</a></li>
+		<li><a href="#tabs-3">边界值测试</a></li>
+	</ul>
+	<div id="tabs-1">
+        
+        <!-- 
+        <div class="testPoint">
+            <span class="title">属性测试点1：测试active属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+               默认选择第二个页签。
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-active"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li><a href="#tabs-2">TabTitle2</a></li> 
+                        <li><a href="#tabs-3">TabTitle3</a></li> 
+                        <li><a href="#tabs-4">TabTitle4</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                    <div id="tabs-2"> 
+                        <p>this is tabs 2.</p> 
+                    </div> 
+                    <div id="tabs-3"> 
+                        <p>this is tabs 3.</p> 
+                    </div> 
+                    <div id="tabs-4"> 
+                        <p>this is tabs 4.</p> 
+                    </div> 
+                </div> 
+            </div>
+        </div>
+        -->
+        <div class="testPoint">
+            <span class="title">属性测试点1：测试autoPlay属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+               页签每隔1秒自动切换。
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-autoPlay"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li><a href="#tabs-2">TabTitle2</a></li> 
+                        <li><a href="#tabs-3">TabTitle3</a></li> 
+                        <li><a href="#tabs-4">TabTitle4</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                    <div id="tabs-2"> 
+                        <p>this is tabs 2.</p> 
+                    </div> 
+                    <div id="tabs-3"> 
+                        <p>this is tabs 3.</p> 
+                    </div> 
+                    <div id="tabs-4"> 
+                        <p>this is tabs 4.</p> 
+                    </div> 
+                </div> 
+            </div>
+        </div>   
+        <!--  
+        <div class="testPoint">
+            <span class="title">属性测试点3：测试border属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+                   页签最外层无边框;
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-border"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                </div> 
+            </div>
+       </div>
+       
+       <div class="testPoint">
+            <span class="title">属性测试点4：测试closable属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+                   页签可以关闭 
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-closable"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li><a href="#tabs-2">TabTitle2</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                    <div id="tabs-2"> 
+                        <p>this is tabs 2.</p> 
+                    </div> 
+                </div> 
+            </div>
+        </div>   
+        
+		<div class="testPoint">
+			<span class="title">属性测试点5：测试height属性</span>
+			<br />
+			<p>操作和操作和预期结果：</p>
+			<div class="textresult">
+			       页签正文区域的高度和右边的红色div高度一样为200px;
+			</div>
+			<div class="tpDIV">
+				<table style="border: 0;width:530px;">
+					<tr>
+						<td width="90%">
+							<div id="test-tabs-height"> 
+							    <ul> 
+							        <li><a href="#tabs-1">TabTitle1</a></li> 
+							    </ul> 
+							    <div id="tabs-1"> 
+							        <p>this is tabs 1.</p> 
+							    </div> 
+							</div> 
+						</td>
+						<td width="10%">
+							<div class="height-ruler" style="height:200px"></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+	   </div>
+       
+       <div class="testPoint">
+            <span class="title">属性测试点6：测试lazyLoad属性、loadComplete事件</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+              首次点击第二个页签先弹出框显示"第二个页签加载完毕"然后显示内容为Baidu首页。
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-lazyload"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li id="lazyload-tab"><a href="./frame.html">TabTitle2</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                </div> 
+            </div>
+        </div>  
+		
+        <div class="testPoint">
+            <span class="title">属性测试点7：测试scrollable属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+                   第一个页签面板可以滚动页签，第二个页签面板不可以滚动页签 
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-scrollable-1"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li><a href="#tabs-2">TabTitle2</a></li> 
+                        <li><a href="#tabs-3">TabTitle3</a></li> 
+                        <li><a href="#tabs-4">TabTitle4</a></li> 
+                        <li><a href="#tabs-5">TabTitle5</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                    <div id="tabs-2"> 
+                        <p>this is tabs 2.</p> 
+                    </div> 
+                    <div id="tabs-3"> 
+                        <p>this is tabs 3.</p> 
+                    </div> 
+                    <div id="tabs-4"> 
+                        <p>this is tabs 4.</p> 
+                    </div> 
+                    <div id="tabs-5"> 
+                        <p>this is tabs 5.</p> 
+                    </div> 
+                </div> 
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-scrollable-2"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li><a href="#tabs-2">TabTitle2</a></li> 
+                        <li><a href="#tabs-3">TabTitle3</a></li> 
+                        <li><a href="#tabs-4">TabTitle4</a></li> 
+                        <li><a href="#tabs-5">TabTitle5</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                    <div id="tabs-2"> 
+                        <p>this is tabs 2.</p> 
+                    </div> 
+                    <div id="tabs-3"> 
+                        <p>this is tabs 3.</p> 
+                    </div> 
+                    <div id="tabs-4"> 
+                        <p>this is tabs 4.</p> 
+                    </div> 
+                    <div id="tabs-5"> 
+                        <p>this is tabs 5.</p> 
+                    </div> 
+                </div> 
+            </div>
+        </div>
+		-->	   
+        
+        <div class="testPoint">
+            <span class="title">属性测试点2：测试interval属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+               页签每隔三秒自动切换。
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-interval"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li><a href="#tabs-2">TabTitle2</a></li> 
+                        <li><a href="#tabs-3">TabTitle3</a></li> 
+                        <li><a href="#tabs-4">TabTitle4</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                    <div id="tabs-2"> 
+                        <p>this is tabs 2.</p> 
+                    </div> 
+                    <div id="tabs-3"> 
+                        <p>this is tabs 3.</p> 
+                    </div> 
+                    <div id="tabs-4"> 
+                        <p>this is tabs 4.</p> 
+                    </div> 
+                </div> 
+            </div>
+        </div>   
+        <!--  	  
+        <div class="testPoint">
+            <span class="title">属性测试点9：测试switchMode属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+               下面两个页签面板，第一个当鼠标移动到页签头的时候切换页签，第二个当鼠标点击页签头的时候切换页签。
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-switchMode-1"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li><a href="#tabs-2">TabTitle2</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                    <div id="tabs-2"> 
+                        <p>this is tabs 2.</p> 
+                    </div> 
+                </div> 
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-switchMode-2"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li><a href="#tabs-2">TabTitle2</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                    <div id="tabs-2"> 
+                        <p>this is tabs 2.</p> 
+                    </div> 
+                </div> 
+            </div>
+        </div>
+          
+        <div class="testPoint">
+            <span class="title">属性测试点10：测试tabHeight属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+                   页签头部的高度为40px
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-tabHeight"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                </div> 
+            </div>
+        </div>
+        
+        <div class="testPoint">
+            <span class="title">属性测试点11：测试tabWidth属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+                   页签面板头部的每个页签的宽度为150px
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-tabWidth"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                        <li><a href="#tabs-2">TabTitle2</a></li> 
+                    </ul> 
+                    <div id="tabs-1"> 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                    <div id="tabs-2"> 
+                        <p>this is tabs 2.</p> 
+                    </div> 
+                </div> 
+            </div>
+        </div>   
+			  
+        <div class="testPoint">
+            <span class="title">属性测试点12：测试width属性</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+                   页签正文区域的宽度和下面的红色div宽度一样为500px;
+            </div>
+            <div class="tpDIV">
+                <div id="test-tabs-width"> 
+                    <ul> 
+                        <li><a href="#tabs-1">TabTitle1</a></li> 
+                    </ul> 
+                    <div id="tabs-1" > 
+                        <p>this is tabs 1.</p> 
+                    </div> 
+                </div> 
+                <div class="width-ruler" style="width:500px">500px</div>
+            </div>
+        </div>
+        -->
+	</div>
+	
+	<div id="tabs-2">
+	<!--  
+		<div class="testPoint">
+			<span class="title">功能测试点1：测试add方法和onBeforeAdd、onAdd事件</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			  点击"add"按钮后先弹出框显示"onBeforeAdd"，然后在最后面加上页签，最后弹出框显示"onAdd"。。
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-method-add"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				        <li><a href="#tabs-3">TabTitle3</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				    <div id="tabs-3"> 
+				        <p>this is tabs 3.</p> 
+				    </div> 
+				</div> 
+			</div>
+			<button onclick="addTabs()" value="add">add</button>
+		</div>
+		<div class="testPoint">
+			<span class="title">功能测试点2：测试close方法和onBeforeClose、onClose事件</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			  点击"close"按钮后先弹出框显示"onBeforeClose"，然后关闭第一个页签，最后弹出框显示"onClose"。
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-method-close"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				        <li><a href="#tabs-3">TabTitle3</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				    <div id="tabs-3"> 
+				        <p>this is tabs 3.</p> 
+				    </div> 
+				</div> 
+			</div>
+			<button onclick="closeTabs()" value="close">close</button>
+		</div>
+		<div class="testPoint">
+			<span class="title">功能测试点3：测试closeAll方法和onBeforeCloseAll、onCloseAll事件</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			  点击"closeAll"按钮后先弹出框显示"onBeforeCloseAll"，然后弹出框显示"onCloseAll"。
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-method-closeAll"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				        <li><a href="#tabs-3">TabTitle3</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				    <div id="tabs-3"> 
+				        <p>this is tabs 3.</p> 
+				    </div> 
+				</div> 
+			</div>
+			<button onclick="closeAllTabs()" value="closeAll">closeAll</button>
+		</div>
+		<div class="testPoint">
+			<span class="title">功能测试点4：测试activate、getActivated、getLength方法和onBeforeActivate、onActivate事件</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			  点击"activate"按钮后先弹出框显示"onBeforeActivate",然后选择第二个页签,最后弹出框显示"onActivate"。点击"getActivated"按钮弹出框显示当前激活的页签的id。点击"getLength"按钮弹出框显示页签数目。
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-method-activate"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				        <li><a href="#tabs-3">TabTitle3</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				    <div id="tabs-3"> 
+				        <p>this is tabs 3.</p> 
+				    </div> 
+				</div> 
+			</div>
+			<button onclick="activateTab()" value="activate">activate</button>
+			<button onclick="getActivatedTabs()" value="getActivated">getActivated</button>
+			<button onclick="getLength()" value="getLength">getLength</button>
+		</div>
+		<div class="testPoint">
+			<span class="title">功能测试点5：测试getAlter方法</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			  点击"getActivatedIndex"按钮后弹出框显示当前选中的页签的index，index从0开始计算。
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-method-getAlter"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				        <li><a href="#tabs-3">TabTitle3</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				    <div id="tabs-3"> 
+				        <p>this is tabs 3.</p> 
+				    </div> 
+				</div> 
+			</div>
+			<button onclick="getActivatedTabIndex()" value="getActivatedIndex">getActivatedIndex</button>
+		</div>
+		<div class="testPoint">
+			<span class="title">功能测试点6：测试setDataSource、reload方法</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			  先点击第二个页签，然后点击"setDataSource"按钮，第二个页签的内容更新为Baidu首页。
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-method-setDataSource"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				</div> 
+			</div>
+			<button onclick="setTabsDataSource()" value="setTabsDataSource">setDataSource</button>
+		</div>
+		-->
+	</div>
+	
+	<div id="tabs-3">
+		<div class="testPoint">
+			<span class="title">边界测试点1：测试width边界值（width:-1）</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			 tabs正常展示，页签宽度使用父容器大小
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-limit-width"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				</div> 
+			</div>
+		</div>			
+		<div class="testPoint">
+			<span class="title">边界测试点2：测试height属性边界值（height:-1）</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			 tabs正常展示，页签高度自动扩充
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-limit-height"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				</div> 
+			</div>
+		</div>			
+		<div class="testPoint">
+			<span class="title">边界测试点3：测试tabWidth属性边界值（tabWidth:-1）</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			 页签面板头部的每个页签的宽度适应里面文字的宽度
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-limit-tabWidth"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				</div> 
+			</div>
+		</div>			
+		<div class="testPoint">
+			<span class="title">边界测试点4：测试tabHeight属性边界值（tabHeight:-1）</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			 页签面板头部的每个页签的高度适应里面文字的高度
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-limit-tabHeight"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				</div> 
+			</div>
+		</div>
+		<!-- 
+		<div class="testPoint">
+			<span class="title">边界测试点5：测试active属性边界值（active:-1）、（active:100）</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			 下面两个tabs,第一个默认选中第一个页签，第二个默认选中第二个页签
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-limit-active-1"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				</div> 
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-limit-active-2"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				</div> 
+			</div>
+		</div>			
+		<div class="testPoint">
+			<span class="title">边界测试点6：测试closable属性边界值</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			 第一个页签不可以关闭，其他的都可以
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-limit-closable"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				        <li><a href="#tabs-3">TabTitle3</a></li> 
+				        <li><a href="#tabs-4">TabTitle4</a></li> 
+				    </ul> 
+				    <div id="tabs-1"> 
+				        <p>this is tabs 1.</p> 
+				    </div> 
+				    <div id="tabs-2"> 
+				        <p>this is tabs 2.</p> 
+				    </div> 
+				    <div id="tabs-3"> 
+				        <p>this is tabs 3.</p> 
+				    </div> 
+				    <div id="tabs-4"> 
+				        <p>this is tabs 4.</p> 
+				    </div> 
+				</div> 
+			</div>
+		</div>			
+		 -->
+		<div class="testPoint">
+			<span class="title">边界测试点5：测试tabs多重嵌套</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			  页签面板以及嵌套的页签面板显示正常
+			</div>
+			<div class="tpDIV">
+				<div id="test-tabs-limit-nest"> 
+				    <ul> 
+				        <li><a href="#tabs-1">TabTitle1</a></li> 
+				        <li><a href="#tabs-2">TabTitle2</a></li> 
+				        <li><a href="#tabs-3">TabTitle3</a></li> 
+				    </ul> 
+				    <div id="tabs-1">
+				    	<p>this is tabs 1.</p>
+				        <div id="test-tabs-limit-nest-1" style="margin: 0 auto;"> 
+						    <ul> 
+						        <li><a href="#tabs-1">TabTitle1</a></li> 
+						        <li><a href="#tabs-2">TabTitle2</a></li> 
+						        <li><a href="#tabs-3">TabTitle3</a></li> 
+						    </ul>
+						    <div id="tabs-1">
+						    	<p>this is nest tabs.</p>
+		  				        <div id="test-tabs-limit-nest-1-1" style="margin: 0 auto;"> 
+								    <ul> 
+								        <li><a href="#tabs-1">TabTitle1</a></li> 
+								        <li><a href="#tabs-2">TabTitle2</a></li> 
+								        <li><a href="#tabs-3">TabTitle3</a></li> 
+								    </ul>
+								    <div id="tabs-1">this is nest tabs 1-1.</div>
+								    <div id="tabs-2">this is nest tabs 1-2.</div>
+								    <div id="tabs-3">this is nest tabs 1-3.</div>
+							    </div> 
+						    </div>
+						    <div id="tabs-2">this is nest tabs 2.</div>
+						    <div id="tabs-3">this is nest tabs 3.</div>
+					    </div> 
+				    </div> 
+				    <div id="tabs-2"> 
+				    	<p>this is nest tabs.</p>
+				        <div id="test-tabs-limit-nest-2" style="margin: 0 auto;"> 
+						    <ul> 
+						        <li><a href="#tabs-1">TabTitle1</a></li> 
+						        <li><a href="#tabs-2">TabTitle2</a></li> 
+						        <li><a href="#tabs-3">TabTitle3</a></li> 
+						    </ul>
+						    <div id="tabs-1">this is nest tabs 1.</div>
+						    <div id="tabs-2">this is nest tabs 2.</div>
+						    <div id="tabs-3">this is nest tabs 3.</div>
+					    </div> 
+				    </div> 
+				    <div id="tabs-3"> 
+				    	<p>this is nest tabs.</p>
+				        <div id="test-tabs-limit-nest-3" style="margin: 0 auto;"> 
+						    <ul> 
+						        <li><a href="#tabs-1">TabTitle1</a></li> 
+						        <li><a href="#tabs-2">TabTitle2</a></li> 
+						        <li><a href="#tabs-3">TabTitle3</a></li> 
+						    </ul>
+						    <div id="tabs-1">this is nest tabs 1.</div>
+						    <div id="tabs-2">this is nest tabs 2.</div>
+						    <div id="tabs-3">this is nest tabs 3.</div>
+					    </div> 
+				    </div> 
+				</div> 
+			</div>
+		</div>
+	
+	</div>
+	
+</div>
+
+	
+</body> 
+</html>

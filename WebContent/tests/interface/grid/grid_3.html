@@ -1,0 +1,268 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>operamasks-ui grid tests</title> 
+<script type="text/javascript" src="../../../jquery.js"></script> 
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="../../../ui/om-grid.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-all.css" /> 
+<link rel="stylesheet" type="text/css" href="../../../tests/common/css/test-all.css" />
+
+<!-- 如上文件必须引入 -->
+ 
+<script type="text/javascript" > 
+
+var colM_id = {
+    header : 'ID',
+    name : 'id',
+    width : 100,
+    align : 'center',
+    sortable : true
+};
+var colM_city = {
+    header : '地区',
+    name : 'city',
+    width : 120,
+    align : 'left',
+    sortable : true
+};
+var colM_address = {
+    header : '地址',
+    name : 'address',
+    align : 'left',
+    width : 'autoExpand',
+    autoExpandMin : 150,
+    sortable : true
+};
+//通用配置
+var commonCfg = {
+    url : '/operamasks-ui/omGridProperty.test?method=fast',
+    method : 'POST',
+    width : 516,
+    limit : 'auto',
+    height : 300,
+    showIndex : true,
+    fillEmptyRows : true,
+    colModel : [ colM_id, colM_city, colM_address ]
+};
+
+//---------------------------------------myConfig----------------------------   
+    $(document).ready(function() {
+        $('#onRowSelect').omGrid($.extend({}, commonCfg, {
+            onRowClick : function(){
+                alert('row selected!');
+            }
+      	}));
+        
+       /** $('#onRowDeselect').omGrid($.extend({}, commonCfg, {  TODO
+            onRowDeselect : function(){
+                
+            }
+      	}));
+       */
+       
+        $('#onRowSelect').omGrid($.extend({}, commonCfg, {
+            onRowClick : function(){
+                alert('row selected!');
+            }
+      	}));
+        $('#onRowDblClick').omGrid($.extend({}, commonCfg, {
+        	  onRowDblClick : function(){
+                  alert('row double clicked!');
+              }
+        }));
+        
+        /* $('#onColumnResize').omGrid($.extend({}, commonCfg, { TODO
+        	  onColumnResize : function(){
+                  
+              }
+        })); */
+        
+        /* $('#onSort').omGrid($.extend({}, commonCfg, { TODO
+  	         onSort : function(){
+            
+             }
+  		})); */
+  		
+        /* $('#onPageChange').omGrid($.extend({}, commonCfg, { TODO
+  	         onPageChange : function(){
+            
+             }
+  		})); */
+        /* $('#onLoadSuccess').omGrid($.extend({}, commonCfg, { TODO
+  	         onLoadSuccess : function(){
+            
+             }
+  		})); */
+  		
+        /* $('#onLoadError').omGrid($.extend({}, commonCfg, { TODO
+  	         onLoadError : function(){
+            
+             }
+  		})); */
+  		
+        /* $('#onRefresh').omGrid($.extend({}, commonCfg, { TODO
+  	         onRefresh : function(){
+            
+             }
+  		})); */
+        
+        
+    });
+</script> 
+ 
+</head> 
+<body> 
+
+
+
+ <div id="tabs">
+	<!-- 下面是API测试的相关代码 -->
+	<div id="tabs-1">
+		<!-- 针对某一个属性的测试单元 -->
+		<div  class="testPoint">
+			<span class="title">属性测试点19：测试onRowSelect属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">点击某行，弹出row selected!</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnRowSelect">
+					<table id="onRowSelect"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+		<div  class="testPoint">
+			<span class="title">属性测试点20：测试onRowDeselect属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">***</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnRowDeselect">
+					<table id="onRowDeselect"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    
+	    <div  class="testPoint">
+			<span class="title">属性测试点21：测试onRowClick属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">点击行，会弹出row clicked</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnRowClick">
+					<table id="onRowClick"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    
+	    <div  class="testPoint">
+			<span class="title">属性测试点22：测试onRowDblClick属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">双击行，弹出row double clicked!</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnRowDblClick">
+					<table id="onRowDblClick"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点23：测试onColumnResize属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">***</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnColumnResize">
+					<table id="onColumnResize"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    
+	    <div  class="testPoint">
+			<span class="title">属性测试点24：测试onSort属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">***</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnSort">
+					<table id="onSort"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    
+	    <div  class="testPoint">
+			<span class="title">属性测试点25：测试onPageChange属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">***</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnPageChange">
+					<table id="onPageChange"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    
+	    <div  class="testPoint">
+			<span class="title">属性测试点26：测试onLoadSuccess属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">***</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnLoadSuccess">
+					<table id="onLoadSuccess"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点27：测试onLoadError属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">***</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnLoadError">
+					<table id="onLoadError"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点28：测试onRefresh属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">***</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testOnRefresh">
+					<table id="onRefresh"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    
+	    
+	    
+	</div>
+	
+</div>
+
+	
+</body> 
+</html>

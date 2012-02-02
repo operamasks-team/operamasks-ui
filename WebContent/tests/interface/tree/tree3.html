@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>operamasks-ui tree tests</title> 
+<script type="text/javascript" src="../../../jquery.js"></script> 
+<script type="text/javascript" src="../../../ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.draggable.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.droppable.js"></script>
+<script type="text/javascript" src="../../../ui/om-panel.js" ></script> 
+<script type="text/javascript" src="../../../ui/om-tabs.js" ></script> 
+<script type="text/javascript" src="../../../tests/common/js/test.js" ></script>
+<script type="text/javascript" src="../../../ui/om-tree.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-all.css" /> 
+<link rel="stylesheet" type="text/css" href="../../common/css/test-all.css" />
+<style>
+.VPDIV {
+	width: 600px;
+	height: 240px;
+}
+</style>
+<script type="text/javascript">
+	$(document).ready(function(){
+	    $("#tree1").omTree({
+	        initExpandLevel: 3,
+	        showCheckbox:true,
+	        dataSource:[{id:'n1',text:'node1',children:[{id:'n11',text:'node11'},{id:'n12',text:'node12'}]},
+	                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+	                   {id:'n3',text:'node3'},{id:'n4',text:'node4'}]
+	    });
+	    $("#tree2").omTree({
+	        initExpandLevel: 3,
+	        dataSource:[{id:'n1',text:'node1',children:[{id:'n11',text:'node11'},{id:'n12',text:'node12'}]},
+		                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+		                   {id:'n3',text:'node3'},{id:'n4',text:'node4'}]
+	    });
+	    $("#tree3").omTree({
+	        initExpandLevel: 3,
+	        dataSource:[{id:'n1',text:'node1',children:[{id:'n11',text:'node11'},{id:'n12',text:'node12'}]},
+		                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+		                   {id:'n3',text:'node3'},{id:'n4',text:'node4'}]
+	    });
+	    $("#tree4").omTree({
+	        initExpandLevel: 3,
+	        dataSource:[{id:'n1',text:'node1',children:[{id:'n11',text:'node11'},{id:'n12',text:'node12'}]},
+		                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+		                   {id:'n3',text:'node3'},{id:'n4',text:'node4'}]
+	    });
+	    $("#tree5").omTree({
+	        dataSource:[{id:'n1',text:'node1',children:[{id:'n11',text:'node11'},{id:'n12',text:'node12'}]},
+		                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+		                   {id:'n3',text:'node3'},{id:'n4',text:'node4'}]
+	    });
+	    $("#tree6").omTree({
+	        initExpandLevel: 3,
+	        dataSource:[{id:'n1',text:'node1',children:[{id:'n11',text:'node11'},{id:'n12',text:'node12'}]},
+		                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+		                   {id:'n3',text:'node3'},{id:'n4',text:'node4'}]
+	    });
+	    $("#tree7").omTree({
+	        initExpandLevel: 3,
+	        dataSource:[{id:'n1',text:'node1',children:[{id:'n11',text:'node11'},{id:'n12',text:'node12'}]},
+		                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+		                   {id:'n3',text:'node3'},{id:'n4',text:'node4'}]
+	    });
+	    $("#tree8").omTree({
+	        initExpandLevel: 3,
+	        dataSource: [{"text": "node1","classes" : "folder","id": "n1",
+	                      "children":[{"text": "node11","id": "n11","classes": "file"},
+	                                  {"text": "node12","id": "n12","classes": "file"}]
+	                               },
+	                               {"text": "node2","expanded": true, "classes" : "folder","id": "n2",
+	                                "children":[{"text":"node21","classes": "folder","id": "n21","expanded": true,
+	                                           "children": [{
+	                                               "id": "n211",
+	                                               "text":"node211"
+	                                           },{
+	                                               "id": "n212",
+	                                               "text":"node212"
+	                                           }]
+	                                       },{
+	                                           "text":"node22",
+	                                           "id": "n22",
+	                                           "classes": "folder",
+	                                           "expanded": true,
+	                                           "children": [{
+	                                               "id": "n221",
+	                                               "text":"node221"
+	                                           }]
+	                                       }]
+	                               },]
+	    });
+	    $("#tree9").omTree({
+            initExpandLevel: 3,
+            dataSource:[{id:'n1',text:'node1',children:[{id:'n11',text:'node11'},{id:'n12',text:'node12'}]},
+                           {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                           {id:'n3',text:'node3'},{id:'n4',text:'node4'}]
+        });
+	});
+	
+	//-------------------testPoint1-----------------------
+	function checkNode1(){
+	    var node1=$("#tree1").omTree('findNode','id','n1');
+         $("#tree1").omTree('check',node1);	    
+	}
+	function uncheckNode1(){
+	    var node1=$("#tree1").omTree('findNode','id','n1');
+         $("#tree1").omTree('uncheck',node1);	    
+	}
+	function checkAll(){
+         $("#tree1").omTree('checkAll',true);	    
+	}
+	function uncheckAll(){
+        $("#tree1").omTree('checkAll',false);	    
+	}
+	function getChecked(){
+        var nodes=$("#tree1").omTree('getChecked',true);
+        var texts="";
+        $.each(nodes,function(i,item){
+            texts=texts+item.text+", ";
+        });
+        alert("被勾选的节点有："+texts);
+	}
+	//-------------------testPoint2-----------------------
+	function selectNode(){
+	    var node2=$("#tree2").omTree('findNode','id','n2');
+        $("#tree2").omTree('select',node2);
+	}
+	function unselectNode(){
+	    var node2=$("#tree2").omTree('findNode','id','n2');
+        $("#tree2").omTree('unselect',node2);
+	}
+	function getSelected(){
+	    var node=$("#tree2").omTree('getSelected');
+	    if (node) {
+	        alert("被选中的节点是："+node.text);
+	    } else {
+	        alert("没有选中任何节点。");
+	    }
+	}
+	
+	//-------------------testPoint3-----------------------
+	function getChildren(){
+	    var node2=$("#tree3").omTree('findNode','id','n2');
+	    var children=$("#tree3").omTree('getChildren',node2);
+	    var texts="";
+	    $.each(children,function(i,item){
+            texts=texts+item.text+", ";
+        });
+        alert("node2的所有一级子节点有："+texts);
+	}
+	function getParent(){
+	    var node21=$("#tree3").omTree('findNode','id','n21',"","true");
+	    var parent=$("#tree3").omTree('getParent',node21);
+        alert("node21的直接父节点是："+parent.text);
+	}
+	function findByNId(){
+	    var node1=$("#tree3").omTree('findByNId','tree3_1');
+	    alert(node1.text);
+	}
+	
+	//-------------------testPoint4-----------------------
+	function getData(){
+	    var nodes=$("#tree4").omTree('getData');
+	    var texts=" ";
+	    $.each(nodes,function(i,item){
+            texts=texts+item.text+" ";
+            if(item.children){
+                $.each(item.children,function(i,m){
+                    texts=texts+m.text+", ";
+                })
+            }
+        });
+	    alert(texts);
+	}
+	function setData(){
+	    var node1=[{id:'node1',text:'node1'}];
+	    $("#tree4").omTree('setData',node1);
+	    $("#tree4").omTree('refresh');
+	}
+	
+	//-------------------testPoint5-----------------------
+	function expand(){
+	    var node2=$("#tree5").omTree('findNode','id','n2');
+	    $("#tree5").omTree('expand',node2);
+	}
+	function collapse(){
+	    var node2=$("#tree5").omTree('findNode','id','n2');
+	    $("#tree5").omTree('collapse',node2);
+	}
+	function expandAll(){
+	    $("#tree5").omTree('expandAll');
+	}
+	function collapseAll(){
+	    $("#tree5").omTree('collapseAll');
+	}
+	
+	//-------------------testPoint6-----------------------
+	function insert(){
+	    $("#tree6").omTree('insert',{id:'n5',text:'node5',children:[{id:'n51',text:'node51'}]});
+	}
+	function modify(){
+	    var node4=$("#tree6").omTree('findNode','id','n4');
+	    $("#tree6").omTree('modify',node4,{id:'n4',text:'n4'});
+	}
+    function remove(){
+        var node4=$("#tree6").omTree('findNode','id','n4');
+	    $("#tree6").omTree('remove',node4);	    
+    }
+    
+  //-------------------testPoint7-----------------------
+	function disable(){
+	    $("#tree7").omTree('disable');
+	}
+	function enable(){
+	    $("#tree7").omTree('enable');
+	}
+	
+    //-------------------testPoint8-----------------------
+	function findNode(){
+           var node=$("#tree8").omTree("findNode","classes","folder",null,true);
+           $("#result").html("第一个符合查询条件classes为folder的节点：" 
+                   + "<b> " + node.text + " </b>");
+       }
+       
+       function findNodes(){
+           var nodes = $("#tree8").omTree("findNodes","classes","folder",null,true);
+           $("#result").html("查询classes为folder的所有节点：");
+           $.each(nodes,function(i, item){
+                $("#result").append("<b>  " + item.text + "  </b>");
+           });
+       }
+       
+       function findNodeBy(){
+           var node = $("#tree8").omTree("findNodeBy", fn);
+           $("#result").html("第一个满足查询条件classes为folder并且expanded为true的节点：" + "<b>  " + node.text + "  </b>");
+       }
+       
+       function findNodesBy(){
+           var nodes=$("#tree8").omTree("findNodesBy", fn, "", true);
+           $("#result").html("第一个满足查询条件classes为folder并且expanded为true的节点：");
+           $.each(nodes, function(i, item){
+                $("#result").append("<b>  " + item.text + "  </b>");
+           });
+       }
+       
+       var fn = function choose(node){
+           if(node.classes == "folder" && node.expanded == true){
+               return true;
+           }
+           return false;
+       }
+     //-------------------testPoint9-----------------------
+       function refresh() {
+           var node1=[{id:'node1',text:'newTree'}];
+   	       $("#tree9").omTree('setData',node1);
+           $("#tree9").omTree('refresh');
+       }
+</script>
+
+</head>
+<body>
+<div  class="testPoint">
+			<span class="title">功能测试点1：测试check方法,uncheck方法，checkAll方法与getChecked方法</span>
+			<br />
+			<p>操作和操作和预期结果：</p>
+			<div class="textresult">
+			  点击第一个按钮勾选node1节点，点击第二个按钮node1节点不勾选，点击第三个按钮树节点全被勾选，
+			  点击第四个按钮树节点全部不被勾选，点击第五个节点返回被勾选的所有节点名称。
+			</div>
+			<div  class="tpDIV VPDIV">
+               <ul id="tree1"></ul>
+               <br/>
+               <button onclick="checkNode1()">check node1</button>
+               <button onclick="uncheckNode1()">uncheck node1</button>
+               <button onclick="checkAll()">全勾选</button>
+               <button onclick="uncheckAll()">全不勾选</button>
+               <button onclick="getChecked()">show checked</button>
+			</div>
+	  </div>
+  
+    <div class="testPoint">
+			<span class="title">功能测试点2：测试select方法,unselect方法与getSelected方法</span>
+			<br />
+			<p>操作和操作和预期结果：</p>
+			<div class="textresult">
+			   点击第一个按钮选中node2节点，点击第二个按钮取消选中node2节点，点击第三个按钮弹出框中显示被选中节点的名称
+			</div>
+			<div  class="tpDIV VPDIV">
+               <ul id="tree2"></ul>
+               <br/>
+               <button onclick="selectNode()">select node2</button>
+               <button onclick="unselectNode()">unselect node2</button>
+               <button onclick="getSelected()">showSelected</button>
+			</div>
+	  </div>
+	  
+	  <div class="testPoint">
+			<span class="title">功能测试点3：测试getChildren方法,getParent方法,findByNId方法</span>
+			<br />
+			<p>操作和操作和预期结果：</p>
+			<div class="textresult">
+			   点击第一个按钮弹出框中显示node2的一级子节点”node21,node22“，点击第二个按钮弹出框中显示node2，
+			   点击第三个按钮弹出框中显示node1.
+			</div>
+			<div  class="tpDIV VPDIV">
+               <ul id="tree3"></ul>
+               <br/>
+               <button onclick="getChildren()">getChildren</button>
+               <button onclick="getParent()">getParent</button>
+               <button onclick="findByNId()">find node1</button>
+			</div>
+	  </div>
+	  
+	  <div class="testPoint">
+			<span class="title">功能测试点4：测试getData方法与setData方法</span>
+			<br />
+			<p>操作和操作和预期结果：</p>
+			<div class="textresult">
+			   点击第一个按钮弹出框中显示”node1 node11 node12 node2 node21 node22 node3 node4“，
+			   点击第二个按钮后树被重构只有一个节点”node1“
+			</div>
+			<div  class="tpDIV VPDIV">
+               <ul id="tree4"></ul>
+               <br/>
+               <button onclick="getData()">getData</button>
+               <button onclick="setData()">setData</button>
+			</div>
+	  </div>
+	  
+	  <div class="testPoint">
+			<span class="title">功能测试点5：测试expand方法,collapse方法,expandAll方法,collapseAll方法</span>
+			<br />
+			<p>操作和操作和预期结果：</p>
+			<div class="textresult">
+			   点击第一个按钮展开node2节点，点击第二个按钮收缩node2节点，
+			   点击第三个按钮展开所有节点，点击第四个按钮收缩所有节点.
+			</div>
+			<div  class="tpDIV VPDIV">
+               <ul id="tree5"></ul>
+               <br/>
+               <button onclick="expand()">expand</button>
+               <button onclick="collapse()">collapse</button>
+               <button onclick="expandAll()">expandAll</button>
+               <button onclick="collapseAll()">collapseAll</button>
+			</div>
+	  </div>
+	  
+	  <div class="testPoint">
+			<span class="title">功能测试点6：测试insert方法,modify方法,remove方法,updateNode方法</span>
+			<br />
+			<p>操作和操作和预期结果：</p>
+			<div class="textresult">
+			   点击第一个按钮根节点下新增一个子节点node5，点击第二个按钮node4节点名称被修改为n4，
+			   点击第三个按钮删除node4节点。
+			</div>
+			<div  class="tpDIV VPDIV">
+               <ul id="tree6"></ul>
+               <br/>
+               <button onclick="insert()">insertNode</button>
+               <button onclick="modify()">modifyNode</button>
+               <button onclick="remove()">removeNode</button>
+			</div>
+	  </div>
+	  
+	  <div class="testPoint">
+			<span class="title">功能测试点7：测试disable方法,enable方法（暂不测试）</span>
+			<br />
+			<p>操作和操作和预期结果：</p>
+			<div class="textresult">
+			   初始时树可用，点击第一个按钮树不可用，点击第二个按钮树可用。
+			</div>
+			<div  class="tpDIV VPDIV">
+               <ul id="tree7"></ul>
+               <br/>
+               <button onclick="disable()">disable</button>
+               <button onclick="enable()">enable</button>
+			</div>
+	  </div>
+	  
+	  <div class="testPoint">
+			<span class="title">功能测试点8：测试findNodes方法,findNode方法,findNodesBy方法，findNodeBy方法</span>
+			<br />
+			<p>操作和操作和预期结果：</p>
+			<div class="textresult">
+			   单击“findNodes”按钮，按钮下面会显示查询classes为folder的所有节点：node1,node2,node21,node22
+			 单击“findNode”按钮，按钮下面会显示第一个满足查询条件classes为folder的节点：node1
+			 单击“findNodesBy”按钮，按钮下面会显示查询classes为folder并且expanded为true的所有节点：：node2,node21,node22
+			 单击“findNodeBy”按钮，按钮下面会显示第一个满足查询条件classes为folder并且expanded为true的节点：node2
+			</div>
+			<div  class="tpDIV VPDIV">
+               <ul id="tree8"></ul>
+               <button onclick="findNodes()">findNodes</button>
+               <button onclick="findNode()">findNode</button>
+               <button onclick="findNodesBy()">findNodesBy</button>
+               <button onclick="findNodeBy()">findNodeBy</button>
+               <div id="result"></div>
+			</div>
+	  </div>
+      
+      <div class="testPoint">
+            <span class="title">功能测试点9：测试refresh方法</span>
+            <br />
+            <p>操作和操作和预期结果：</p>
+            <div class="textresult">
+               单击“refresh”按钮，树节点只显示“newTree”节点
+            </div>
+            <div  class="tpDIV VPDIV">
+               <ul id="tree9"></ul>
+               <button onclick="refresh()">refresh</button>
+               <div id="result"></div>
+            </div>
+      </div>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>operamasks-ui grid tests</title> 
+<script type="text/javascript" src="../../../jquery.js"></script> 
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="../../../ui/om-grid.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-all.css" /> 
+<link rel="stylesheet" type="text/css" href="../../../tests/common/css/test-all.css" />
+
+<!-- 如上文件必须引入 -->
+ 
+<script type="text/javascript" > 
+
+var colM_id = {
+    header : 'ID',
+    name : 'id',
+    width : 100,
+    align : 'center',
+    sortable : true
+};
+var colM_city = {
+    header : '地区',
+    name : 'city',
+    width : 120,
+    align : 'left',
+    sortable : true
+};
+var colM_address = {
+    header : '地址',
+    name : 'address',
+    align : 'left',
+    width : 'autoExpand',
+    autoExpandMin : 150,
+    sortable : true
+};
+//通用配置
+var commonCfg = {
+    url : '/operamasks-ui/omGridProperty.test?method=fast',
+    method : 'POST',
+    width : 516,
+    limit : 'auto',
+    height : 300,
+    showIndex : true,
+    fillEmptyRows : true,
+    colModel : [ colM_id, colM_city, colM_address ]
+};
+
+    $(document).ready(function() {
+        //test option 'height'
+        $('#height').omGrid($.extend({}, commonCfg, {height:400}));
+        
+        //test option 'width'
+        $('#width').omGrid($.extend({}, commonCfg ,{width : 800}));
+        
+        //test option 'dataSource'  TODO
+        // $('#dataSource').omGrid($.extend({}, commonCfg ,{width : 800}));
+        
+      	//test option 'title'
+        $('#title').omGrid($.extend({}, commonCfg, {title : 'TableOfNet'}));
+
+        $('#pageText').omGrid($.extend({}, commonCfg ,{pageText : 'total {totalPage} page,jump to {index} page'}));
+        
+    	//test option 'colModel'
+        $('#colModel').omGrid($.extend({}, commonCfg));
+    	
+    	//test option 'emptyMsg'
+        $('#emptyMsg').omGrid($.extend({}, commonCfg , {emptyMsg : 'no data at all',url:'/operamasks-ui/omGridProperty.test?testOption=emptyMsg'}));
+    	
+    	//test option 'errorMsg'
+        $('#errorMsg').omGrid($.extend({}, commonCfg , {errorMsg : 'error happended!', url:'/operamasks-ui/emptyAction.abc'}));
+    	
+    	//test option 'loadingMsg'
+        $('#loadingMsg').omGrid($.extend({}, commonCfg , {loadMask : false ,loadingMsg:'I am loading',url : '/operamasks-ui/omGridProperty.test?testOption=loadingMsg'}));
+    });
+</script> 
+ 
+</head> 
+<body> 
+
+
+
+ <div id="tabs">
+	<!-- 下面是API测试的相关代码 -->
+	<div id="tabs-1">
+		<!-- 针对某一个属性的测试单元 -->
+		<div  class="testPoint">
+			<span class="title">属性测试点1：测试height属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">高度为400px</div>
+			<div  class="tpDIV">
+				<form>
+					<div id="testHeight">
+						<table id="height"></table>
+					</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点2：测试width属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">宽度为800px</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testWidth">
+					<table id="width"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点3：测试dataSource属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">表格的默认宽度为60，表格右边会空出很大一块</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testDataSource">
+					<table id="dataSource"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点4：测试colModel属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">正常显示grid</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testColModel">
+					<table id="colModel"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点5：测试method属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">grid正常显示</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testMethod">
+					<table id="method"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点6：测试loadingMsg属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">点击分页工具条上面的刷新按钮，出现I am loading</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testLoadingMsg">
+					<table id="loadingMsg"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点7：测试emptyMsg属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">分页工具条上面显示 no data at all</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testEmptyMsg">
+					<table id="emptyMsg"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点8：测试errorMsg属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">分页工具条上面显示error happended!</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testErrorMsg">
+					<table id="errorMsg"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点9：测试pageText属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">分页工具条显示total 18 page,jump to page</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testPageText">
+					<table id="pageText"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    
+	</div>
+	
+</div>
+
+	
+</body> 
+</html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="project" default="" basedir=".">
+	<description>
+            selenium auto test
+    </description>
+	<property file="build.properties" />
+	<property name="test.report.dir" value="report"/>
+
+	<target name="runtests">
+		<mkdir dir="${test.report.dir}" />
+		<junit fork="yes" printSummary="yes">
+			<classpath>
+				<fileset dir="../WEB-INF/lib">
+					<!--先把所需要的包包进来-->
+					<include name="junit-4.5.jar" />
+					<include name="selenium-java-2.1.0.jar" />
+					<include name="selenium-server2.jar" />
+				</fileset>
+				<pathelement path="../WEB-INF/classes" />
+			</classpath>
+			
+			<formatter type="xml" />
+			<batchtest todir="${test.report.dir}">
+				<fileset dir="../WEB-INF/classes">
+					<!--找到要测试的用例，前面加两个星表示可以是N层目录，加一个星表示可以是随意字符集-->
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<junitreport todir="${test.report.dir}">
+			<fileset dir="${test.report.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${test.report.dir}" />
+		</junitreport>
+	</target>
+</project>

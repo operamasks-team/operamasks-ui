@@ -1,0 +1,231 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>operamasks-ui grid tests</title> 
+<script type="text/javascript" src="../../../jquery.js"></script> 
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="../../../ui/om-grid.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-all.css" /> 
+<link rel="stylesheet" type="text/css" href="../../../tests/common/css/test-all.css" />
+
+<!-- 如上文件必须引入 -->
+ 
+<script type="text/javascript" > 
+
+var colM_id = {
+    header : 'ID',
+    name : 'id',
+    width : 100,
+    align : 'center',
+    sortable : true
+};
+var colM_city = {
+    header : '地区',
+    name : 'city',
+    width : 120,
+    align : 'left',
+    sortable : true
+};
+var colM_address = {
+    header : '地址',
+    name : 'address',
+    align : 'left',
+    width : 'autoExpand',
+    autoExpandMin : 150,
+    sortable : true
+};
+//通用配置
+var commonCfg = {
+    url : '/operamasks-ui/omGridProperty.test?method=fast',
+    method : 'POST',
+    width : 516,
+    limit : 'auto',
+    height : 300,
+    showIndex : true,
+    fillEmptyRows : true,
+    colModel : [ colM_id, colM_city, colM_address ]
+};
+
+//---------------------------------------myConfig----------------------------   
+
+   var default_colM_id = {
+        header : 'ID',
+        name : 'id',
+        align : 'center',
+        sortable : true
+    };
+    var default_colM_address = {
+        header : '地址',
+        name : 'address',
+        align : 'left',
+        sortable : true
+    };
+    
+    $(document).ready(function() {
+      //test option 'pageStat'
+        $('#pageStat').omGrid($.extend({}, commonCfg ,{pageStat : 'total {total}，from {from} to {to}'}));
+      
+      //test option 'fillEmptyRows'
+        $('#fillEmptyRows').omGrid($.extend({}, commonCfg, {fillEmptyRows : true, url : '/operamasks-ui/omGridProperty.test?testOption=fillEmptyRows'}));
+      
+      //test option 'paged'
+        $('#paged').omGrid($.extend({}, commonCfg, {paged : true}));
+      
+      //test option 'limit'
+        $('#limit').omGrid($.extend({}, commonCfg , {limit:20}));
+      
+      //test option 'noWrap' TODO 名字改成wrap
+        $('#noWrap').omGrid($.extend({}, commonCfg ,{noWrap : false , colModel : [small_colM_city , default_colM_id , default_colM_address]}));
+      
+      //test option 'forceFit' TODO
+       // $('#forceFit').omGrid($.extend({}, commonCfg ,{noWrap : false , colModel : [small_colM_city , default_colM_id , default_colM_address]}));
+      
+      //test option 'singleSelect' TODO
+        //$('#singleSelect').omGrid($.extend({}, commonCfg, {singleSelect : false, showCheckbox : true}));
+      
+      //test option 'showIndex'
+        $('#showIndex').omGrid($.extend({}, commonCfg ,{showIndex : true}));
+      
+      //test option 'showIndex' TODO
+       // $('#rowClasses').omGrid($.extend({}, commonCfg ,{showIndex : true}));
+
+    });
+</script> 
+ 
+</head> 
+<body> 
+
+
+
+ <div id="tabs">
+	<!-- 下面是API测试的相关代码 -->
+	<div id="tabs-1">
+		<!-- 针对某一个属性的测试单元 -->
+		<div  class="testPoint">
+			<span class="title">属性测试点10：测试pageStat属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">分页工具条显示total **，from 1 to *</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testPageStat">
+					<table id="pageStat"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点11：测试fillEmptyRows属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">只有一行数据，其它空白处用空行填充</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testFillEmptyRows">
+					<table id="fillEmptyRows"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点12：测试paged属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">显示分页工具条</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testPaged">
+					<table id="paged"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点13：测试limit属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">grid显示20条数据</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testLimit">
+					<table id="limit"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点14：测试noWrap（需要修改成wrap）属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">每行的文字自动换行，行高增加</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testNoWrap">
+					<table id="noWrap"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点15：测试forceFit属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">****</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testForceFit">
+					<table id="forceFit"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	     <div  class="testPoint">
+			<span class="title">属性测试点16：测试singleSelect属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">不测试</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testSingleSelect">
+					<table id="singleSelect"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    <div  class="testPoint">
+			<span class="title">属性测试点17：测试showIndex属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">每行前面有顺序数字</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testShowIndex">
+					<table id="showIndex"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	     <div  class="testPoint">
+			<span class="title">属性测试点18：测试rowClasses属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">***</div>
+			<div  class="tpDIV">
+				<form>
+				<div id="testRowClasses">
+					<table id="rowClasses"></table>
+				</div>
+				</form>
+			</div>
+	    </div>
+	    
+	    
+	    
+	</div>
+	
+</div>
+
+	
+</body> 
+</html>

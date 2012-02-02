@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../../common/css/test-all.css" />
+<script type="text/javascript" src="../../../jquery.js"></script>
+<script type="text/javascript" src="../../common/js/test_index.js"></script>
+<script type="text/javascript">
+  
+</script>
+</head>
+<body>
+  <table id="testDescriptionTable" cellspacing="0">
+      <thead>
+        <tr>
+          <td colspan="3" style="text-align: left;">
+					omTree测试案例，API属性总共 
+					 <!-- 请输入API属性个数 -->
+					  <span class="apiNo" number="10"></span> 个，
+					案例覆盖率 <span class="percentage" style="font-weight: bold;"></span>；
+					事件测试案例总共 9 个；
+					功能测试案例总共 8 个。
+          </td>
+        </tr>
+        <tr>
+          <td width="5%">分类</td>
+          <td width="5%">测试页面</td>
+          <td width="80%">测试点</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="1">属性测试案例</td>
+          <td>
+            <a href="tree1.html" onclick="openPage(this)">tree1</a>
+          </td>
+          <td class="api">
+               initExpandLevel(测试点1), dataSource(测试点2), lineHover(测试点3), showIcon(测试点5), 
+              showLine(测试点7), disabled(测试点8), showCheckBox(测试点9), cascadeCheck(测试点10),
+               draggable(测试点11), filter(测试点12)
+          </td>
+        </tr>
+        
+        
+        <tr>
+          <td rowspan="1">事件测试案例</td>
+          <td>
+            <a href="tree2.html" onclick="openPage(this)">tree2</a>
+          </td>
+          <td class="fun">
+               onClick,onDblClick (测试点1), onBeforeLoad,onSuccess (测试点2), onError (测试点3), onDrag,onDrop (测试点4),
+               onBeforeExpand,onBeforeCollapse(测试点5), onExpand,onCollapse(测试点6), onRightClick (测试点7),onCheck(测试点47), 
+               onSelect，onBeforeSelect (测试点9)
+          </td>
+        </tr>
+        <tr>
+           <td rowspan="1">功能测试案例</td>
+          <td>
+            <a href="tree3.html" onclick="openPage(this)">tree3</a>
+          </td>
+          <td class="fun">
+               check方法,uncheck方法，checkAll方法与getChecked方法(测试点1), select方法,unselect方法与getSelected方法(测试点2),
+               getChildren方法,getParent方法,findByNId方法(测试点3)，getData方法与setData方法(测试点4)，
+               expand方法,collapse方法,expandAll方法,collapseAll方法(测试点5)，insert方法,modify方法,remove方法,updateNode方法(测试点6)
+               disable方法,enable方法(测试点7)，findNodes方法,findNode方法,findNodesBy方法，findNodeBy方法(测试点8)
+          </td>
+        </tr>
+        
+       
+      </tbody>
+    </table>
+</body>
+</html>

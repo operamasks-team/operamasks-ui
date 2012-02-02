@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>operamasks-ui tree tests</title> 
+<script type="text/javascript" src="../../../jquery.js"></script> 
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="../../../ui/om-panel.js" ></script> 
+<script type="text/javascript" src="../../../ui/om-tabs.js" ></script> 
+<script type="text/javascript" src="../../../tests/common/js/test.js" ></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.draggable.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.droppable.js"></script>
+<script type="text/javascript" src="../../../ui/om-tree.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-all.css" /> 
+<link rel="stylesheet" type="text/css" href="../../common/css/test-all.css" />
+<style>
+.VPDIV {
+	width: 600px;
+	height: 200px;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+     $("#tree4").omTree({
+        draggable : true,
+        dataSource:[
+           {id:'root',
+            text:'root',
+            children:[{id:'n1',text:'node1'},
+                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                   {id:'n3',text:'node3'}
+            ]}],
+         onDrag: function(node){
+             $("#result4").html("你正在拖动"+node.text+"节点");
+         },
+         onDrop: function(node){
+             $("#result4").append("   "+node.text+" 被拖放");
+         }
+    });
+    
+    $("#tree7").omTree({
+        dataSource:[
+           {id:'root',
+            text:'root',
+            children:[{id:'n1',text:'node1'},
+                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                   {id:'n3',text:'node3'}
+            ]}],
+         onRightClick: function(node){
+             $("#result7").html("您右键点击了"+node.text+"节点");
+         }
+    });
+    /*
+    $("#tree1").omTree({
+        initExpandLevel: 3,
+        dataSource:[
+           {id:'root',
+            text:'root',
+            children:[{id:'n1',text:'node1'},
+                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                   {id:'n3',text:'node3'}
+            ]}],
+         onClick: function(data){
+             $("#result1").html(data.text+" 被单击");
+         },
+         onDblClick: function(data){
+             $("#result1").html(data.text+" 被双击");
+         }
+    });
+    
+    $("#tree2").omTree({
+        initExpandLevel: 3,
+        dataSource:"../../../omTree.json",
+         onBeforeLoad: function(node){
+             $("#result2").html("调用beforeLoad方法<br/>");
+         },
+         onSuccess: function(node,data){
+             $("#result2").append("成功加载树节点");
+         }
+    });
+    
+    $("#tree3").omTree({
+        initExpandLevel: 3,
+        dataSource:"../../../omTree1.json",
+         onError: function(jqXHR, textStatus, errorThrown){
+             $("#result3").html('向'+'../../../omTree1.json'+'请求数据出错');
+         }
+    });
+    
+   
+    
+    $("#tree5").omTree({
+        initExpandLevel: 3,
+        dataSource:[
+           {id:'root',
+            text:'root',
+            children:[{id:'n1',text:'node1'},
+                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                   {id:'n3',text:'node3'}
+            ]}],
+         onBeforeExpand: function(node){
+             $("#result5").html(node.text+"节点的onBeforeExpand事件被触发");
+         },
+         onBeforeCollapse: function(node){
+             $("#result5").html(node.text+"节点的onBeforeCollapse事件被触发");
+         }
+    });
+    
+    $("#tree6").omTree({
+        initExpandLevel: 3,
+        dataSource:[
+           {id:'root',
+            text:'root',
+            children:[{id:'n1',text:'node1'},
+                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                   {id:'n3',text:'node3'}
+            ]}],
+         onExpand: function(node){
+             $("#result6").html(node.text+"节点的onExpand事件被触发");
+         },
+         onBeforeCollapse: function(node){
+             $("#result6").html(node.text+"节点的onBeforeCollapse事件被触发，并且返回false");
+             return false;
+         },
+         onCollapse: function(node){
+             $("#result6").html(node.text+"节点的onCollapse事件被触发");
+         }
+    });
+    
+    
+    
+    $("#tree8").omTree({
+        initExpandLevel: 3,
+        showCheckbox: true,
+        dataSource:[
+           {id:'root',
+            text:'root',
+            children:[{id:'n1',text:'node1'},
+                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                   {id:'n3',text:'node3'}
+            ]}],
+         onCheck: function(node){
+             if($("#tree8").omTree("isCheck",node)){
+                 $("#result8").html(node.text+"节点被勾选");
+             }else{
+                 $("#result8").html(node.text+"节点取消勾选");    
+             }
+         }
+    });
+    
+    $("#tree9").omTree({
+        initExpandLevel: 3,
+        dataSource:[
+           {id:'root',
+            text:'root',
+            children:[{id:'n1',text:'node1'},
+                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                   {id:'n3',text:'node3'}
+            ]}],
+         onBeforeSelect: function(node){
+             $("#result9").html(node.text+"节点的onBeforeSelect事件被触发");
+         },
+         onSelect: function(node){
+             $("#result9").append("   "+node.text+"节点的onSelect事件被触发");
+         }
+    });
+    */
+});
+</script>
+</head>
+<body>
+<!-- 
+<div class="testPoint">
+		<span class="title">测试onDrag,onDrop</span>
+		<br />
+		<p>操作和预期结果：</p>
+		<div class="textresult">
+			     拖动树结点时，响应事件，<span class="color:red">暂不测试</span>
+		</div>
+		<div  class="tpDIV VPDIV">
+		    <ul id="tree4"></ul>
+		    <br/>
+		    <span id="result4"></span>
+        </div>
+	</div>
+	-->
+	<div class="testPoint">
+		<span class="title">事件测试点7：测试onRightClick</span>
+		<br />
+		<p>操作和预期结果：</p>
+		<div class="textresult">
+			   当右键点击某个树节点时，页面将显示"右键点击了该节点"；
+		</div>
+		<div  class="tpDIV VPDIV">
+		    <ul id="tree7"></ul>
+		    <br/>
+		    <span id="result7"></span>
+		</div>
+	</div>
+<!--  	<div class="testPoint">
+		<span class="title">事件测试点1：测试onClick,onDblClick</span>
+		<br />
+		<p>操作和预期结果：</p>
+		<div class="textresult">
+			     单击树节点时页面上会打印出被单击节点的名称，双击树节点时在页面上也会打印出被双击节点的名称。
+		</div>
+		<div class="tpDIV VPDIV">
+		    <ul id="tree1"></ul>
+		    <br/>
+		    <span id="result1"></span>
+		</div>
+	</div>
+	
+	<div class="testPoint">
+		<span class="title">事件测试点2：测试onBeforeLoad,onSuccess</span>
+		<br />
+		<p>操作和预期结果：</p>
+		<div class="textresult">显示“调用beforeLoad方法”和“成功加载树节点”
+		</div>
+		<div class="tpDIV VPDIV">
+		    <ul id="tree2"></ul>
+		    <br/>
+		    <span id="result2"></span>
+		</div>
+	</div>
+
+	<div class="testPoint">
+		<span class="title">事件测试点3：测试onError</span>
+		<br />
+		<p>操作和预期结果：</p>
+		<div class="textresult">
+			     树加载失败，并且打印出错误加载的信息“向../../../omTree1.json请求数据出错”。
+		</div>
+		<div class="tpDIV VPDIV">
+		    <ul id="tree3"></ul>
+		    <br/>
+		    <span id="result3"></span>
+		</div>
+	</div>
+	
+	
+	
+	<div class="testPoint">
+		<span class="title">事件测试点5：测试onBeforeExpand,onBeforeCollapse</span>
+		<br />
+		<p>操作和预期结果：</p>
+		<div class="textresult">
+			     当展开某个树节点，页面显示该节点的onBeforeExpand事件被触发；
+			     当收缩某个树节点，页面显示该节点的onBeforeCollapse事件被触发
+		</div>
+		<div  class="tpDIV VPDIV">
+		    <ul id="tree5"></ul>
+		    <br/>
+		    <span id="result5"></span>
+		</div>
+	</div>
+	
+	<div class="testPoint">
+		<span class="title">事件测试点6：测试onExpand,onBeforeCollapse,onCollapse</span>
+		<br />
+		<p>操作和预期结果：</p>
+		<div class="textresult">
+			   当展开某个树节点，页面将显示该节点的onExpand事件被触发；
+			     当试图收缩某个树节点时，树节点将无法收缩，并且页面将显示该节点的onBeforeCollapse事件被触发并且返回false
+		</div>
+		<div  class="tpDIV VPDIV">
+		    <ul id="tree6"></ul>
+		    <br/>
+		    <span id="result6"></span>
+		</div>
+	</div>
+	
+	
+	
+	<div class="testPoint">
+		<span class="title">事件测试点8：测试onCheck</span>
+		<br />
+		<p>操作和预期结果：</p>
+		<div class="textresult">
+			   当对某个树节点进行勾选操作时，页面将显示该节点的勾选状态信息。
+		</div>
+		<div  class="tpDIV VPDIV">
+		    <ul id="tree8"></ul>
+		    <br/>
+		    <span id="result8"></span>
+		</div>
+	</div>
+	
+	<div class="testPoint">
+		<span class="title">事件测试点9：测试onSelect，onBeforeSelect</span>
+		<br />
+		<p>操作和预期结果：</p>
+		<div class="textresult">
+			   当对某个树节点被选中时，页面显示该节点onSelect和onBeforeSelect事件信息
+		</div>
+		<div  class="tpDIV VPDIV">
+		    <ul id="tree9"></ul>
+		    <br/>
+		    <span id="result9"></span>
+		</div>
+	</div>
+-->
+</body>
+</html>

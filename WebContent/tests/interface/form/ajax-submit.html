@@ -1,0 +1,542 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>operamasks-ui ajaxSubmit tests</title> 
+
+
+<script type="text/javascript" src="../../../jquery.js"></script> 
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="../../../ui/om-panel.js" ></script>
+<script type="text/javascript" src="../../../ui/om-tabs.js" ></script> 
+<script type="text/javascript" src="../../../tests/common/js/test.js" ></script>
+<script type="text/javascript" src="../../../tests/common/js/json2.js" ></script>
+<link rel="stylesheet" type="text/css" href="../../../tests/common/css/test-all.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-core.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-tabs.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-theme.css" />
+<!-- 如上文件必须引入 -->
+ 
+<script type="text/javascript" src="../../../ui/om-ajaxsubmit.js" ></script> 
+<script type="text/javascript" > 
+    $(document).ready(function() { 
+
+      $("#testForm_clearForm").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({clearForm : true});
+          return false;
+      });
+      $("#testForm_data").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({data : {omui : "great"}, beforeSubmit : function(formData) {$("#dataRequestContent").text($.param(formData));}});
+      });
+      $("#testForm_dataType").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({dataType : "script"});
+      });
+      $("#testForm_method").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({method : "POST", target : "#typeUpdateArea"});
+      });
+      $("#testForm_forceSync").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({
+                forceSync : true,
+                beforeSubmit: function(a,f,o) {
+                    o.dataType = $('#forceSyncOutput').html('Submitting...');
+                }
+           });
+      });
+      $("#testForm_replaceTarget").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({replaceTarget : true, target : "#replaceTargetUpdateArea"});
+      });
+      $("#testForm_resetForm").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({resetForm : true});
+      });
+      $("#testForm_semantic").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({beforeSubmit : function(formData) {$("#semanticRequestContent").text($.param(formData));}});
+          return false;
+      });
+      $("#testForm_success").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({success : function() {alert("已成功提交");}});
+      });
+      $("#testForm_target").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({target : "#targetUpdateArea"});
+      });
+      $("#testForm_url").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({url : "../../../ajaxSubmit.test?method=sayHello",target : '#urlUpdateArea'});
+      });
+      $("#testForm_beforeSerialize").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({beforeSerialize : function(form,options){
+                $('#beforeSerializeUpdateArea').html('此方法在form序列化之前执行。提交已被取消');
+                return false;
+          }});
+      });
+      $("#testForm_beforeSubmit").bind("submit", function(event) {
+          event.preventDefault();
+          $(this).omAjaxSubmit({beforeSubmit : function(arr,form,options){
+                $('#beforeSubmitUpdateArea').html('此方法在form被提交之前执行。系列化的结果为:name='+arr[0].value+'。提交已被取消');
+                return false;
+          }});
+      });
+      /** test omForm tools method*/
+      $("#testFormTools_formToArray2").bind("submit", function(event) {
+          event.preventDefault();
+          $('#formToArray2UpdateArea').html(JSON.stringify($("#testFormTools_formToArray2").formToArray()));
+          return false;
+      });
+      $("#testFormTools_formSerialize1").bind("submit", function(event) {
+          event.preventDefault();
+          $('#formSerialize1UpdateArea').html($("#testFormTools_formSerialize1").formSerialize());
+          return false;
+      });
+      $("#testFormTools_fieldSerialize2").bind("submit", function(event) {
+          event.preventDefault();
+          $('#fieldSerialize2UpdateArea').html($("#testFormTools_fieldSerialize2").children().fieldSerialize());
+          return false;
+      });
+      
+    }); 
+</script> 
+ 
+</head> 
+<body> 
+
+  <div class="total">
+		omForm测试案例，API属性总共 
+		 <!-- 请输入API属性个数 -->
+		  <span class="apiNo" number="8"></span> 个，
+		案例覆盖率 <span class="percentage" style="font-weight: bold;"></span>；
+		功能测试案例总共 <span class="funcNo" style="font-weight: bold;"></span> 个；
+		边界值测试案例总共 <span class="borderNo" style="font-weight: bold;"></span> 个。
+  </div>
+
+ <div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">属性测试</a></li>
+		<li><a href="#tabs-2">功能测试</a></li>
+		<li><a href="#tabs-3">边界值测试</a></li>
+	</ul>
+	
+	<!-- 下面是API测试的相关代码 -->
+	<div id="tabs-1">
+		<div  class="testPoint">
+			<span class="title">属性测试点1：测试clearForm属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">在输入域中输入任意文字、下拉框中选择任意值，点击"提交"按钮，输入域和下拉框中的值将被清空</div>
+			<div  class="tpDIV">
+			     <form method="post" action="ajaxSubmit.test" id="testForm_clearForm">
+			         <input type="text"  />
+			         <select>
+                        <option value="option1">option1</option>
+                        <option value="option2">option2</option>
+                        <option />
+                     </select>
+			         <input type="submit" value="提交" />
+			     </form>
+			</div>
+	    </div>
+	    
+	    <div  class="testPoint">
+            <span class="title">属性测试点2：测试data属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击提交按钮，下面内容将显示 omui=great</div>
+            <div  class="tpDIV">
+                 <form method="post" action="ajaxSubmit.test" id="testForm_data">
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div>请求串:<span id="dataRequestContent"></span></div>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点3：测试dataType属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击提交按钮，弹出对话框显示"script from server"</div>
+            <div  class="tpDIV">
+                 <form method="post" action="../../../ajaxSubmit.test?method=giveMeScript" id="testForm_dataType">
+                     <input type="submit" value="提交" />
+                 </form>
+            </div>
+         </div>
+         
+         <div  class="testPoint">
+            <span class="title">属性测试点4：测试method属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击提交按钮，下面内容将显示 "method为POST"</div>
+            <div  class="tpDIV">
+                 <form method="get" action="../../../ajaxSubmit.test?method=testMethod" id="testForm_method">
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div>更新内容:<span id="typeUpdateArea"></span></div>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点5：测试replaceTarget属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击提交按钮，下面显示的"原始内容"将变为 "来自服务器端的消息", 且没有边框</div>
+            <div  class="tpDIV">
+                 <form method="post" action="../../../ajaxSubmit.test?method=sayHello" id="testForm_replaceTarget">
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div><span id="replaceTargetUpdateArea" style="border:1px solid red;">原始内容</span></div>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点6：测试resetForm属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">在输入域中输入任意文字，点击"提交"按钮，输入域中的值将被清空</div>
+            <div  class="tpDIV">
+                 <form method="post" action="../../../ajaxSubmit.test" id="testForm_resetForm">
+                     <input type="text"  />
+                     <select>
+                        <option value="option1">option1</option>
+                        <option value="option2">option2</option>
+                        <option />
+                     </select>
+                     <input type="submit" value="提交" />
+                 </form>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点7：测试target属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击提交按钮，下面内容将显示 "目标区域已更新"</div>
+            <div  class="tpDIV">
+                 <form method="post" action="../../../ajaxSubmit.test?method=target" id="testForm_target">
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div>更新区域:<span id="targetUpdateArea"></span></div>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点8：测试url属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击提交按钮，下面内容将显示 "来自服务器端的消息"</div>
+            <div  class="tpDIV">
+                 <form method="post" action="#" id="testForm_url">
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div>更新内容:<span id="urlUpdateArea"></span></div>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点9：测试success属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击提交按钮，弹出对话框显示"已成功提交"</div>
+            <div  class="tpDIV">
+                 <form method="post" action="../../../ajaxSubmit.test" id="testForm_success">
+                     <input type="submit" value="提交" />
+                 </form>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点10：测试forceSync属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">TODO：暂不测试</div>
+            <div  class="tpDIV">
+                 <form method="post" enctype="multipart/form-data" action="../../../ajaxSubmit.test?method=upload" id="testForm_forceSync">
+                     <input type="file" name="file"/>
+                     <input type="text" name="text"/>
+                     <input type="submit" value="提交"/>
+                 </form>
+                 <div>提示:<span id="forceSyncOutput"></span></div>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点11：测试iframe属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">TODO：暂不测试</div>
+            <div  class="tpDIV">
+                 <form method="post" action="#" id="testForm_iframe">
+                     <input type="submit" value="提交" />
+                 </form>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点12：测试iframeSrc属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">TODO：暂不测试</div>
+            <div  class="tpDIV">
+                 <form method="post" action="#" id="testForm_iframeSrc">
+                     <input type="submit" value="提交" />
+                 </form>
+            </div>
+        </div>
+        
+        <div  class="testPoint">
+            <span class="title">属性测试点13：测试iframeTarget属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">TODO：暂不测试</div>
+            <div  class="tpDIV">
+                 <form method="post" action="#" id="testForm_iframeTarget">
+                     <input type="submit" value="提交" />
+                 </form>
+            </div>
+        </div>
+
+        <div  class="testPoint">
+            <span class="title">属性测试点14：测试semantic属性<font color=red><b>（不需要测试，该属性已经被删除）</b></font></span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult"><del>点击"提交"按钮，请求串1将出现"image=image1&text1=txt"。</del></div>
+            <div  class="tpDIV">
+                 <form method="post" action="../../../ajaxSubmit.test" id="testForm_semantic">
+                     <input type="image" src="images/date.gif" name="image1" value="img" alt="img"/>
+                     <input type="text" name="text1" value="txt" readonly="readonly"/>
+                     <input type="text" name="a1" value="a1" readonly="readonly"/>
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div>请求串:<span id="semanticRequestContent"></span></div>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+	</div>
+	
+	
+	<!-- 下面是功能测试的相关代码 -->
+	<div id="tabs-2">
+		下面测试点为对omForm的事件回调的测试。
+		<div  class="testPoint">
+            <span class="title">属性测试点1：测试beforeSerialize属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击提交按钮，下面内容将显示 "此方法在form序列化之前执行。提交已被取消"，并且不会有请求发送。</div>
+            <div  class="tpDIV">
+                 <form method="post" action="#" id="testForm_beforeSerialize">
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div>更新内容:<span id="beforeSerializeUpdateArea"></span></div>
+            </div>
+        </div>
+        <div  class="testPoint">
+            <span class="title">属性测试点2：测试beforeSubmit属性</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击提交按钮，下面内容将显示 "此方法在form被提交之前执行。系列化的结果为:name=<font color=blur>输入框的值</font>。提交已被取消"，并且不会有请求发送。</div>
+            <div  class="tpDIV">
+                 <form method="post" action="#" id="testForm_beforeSubmit">
+                     <input type="text" name="name" value="zhangsan"/>
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div>更新内容:<span id="beforeSubmitUpdateArea"></span></div>
+            </div>
+        </div>
+	    	下面测试点为对omForm的工具方法的测试。
+		<div  class="testPoint">
+			<span class="title">功能测试点1：测试$.fn.formToArray()功能</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">点击按钮，返回[{"name":"c","value":"zhangsan"},{"name":"b","value":"lisi"},{"name":"a","value":"wangwu"}]。</div>
+			<div  class="tpDIV">
+				 <form method="post" action="#" id="testFormTools_formToArray2">
+                     <input type="text" name="c" value="zhangsan" readonly="readonly"/>
+                     <input type="text" name="b" value="lisi" readonly="readonly"/>
+                     <input type="text" name="a" value="wangwu" readonly="readonly"/>
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div>方法返回结果为:<span id="formToArray2UpdateArea"></span></div>
+			</div>
+	   </div>
+	   
+	   <div  class="testPoint">
+            <span class="title">功能测试点2：测试$.fn.formSerialize()功能</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击按钮，返回c=zhangsan&b=lisi&a=wangwu。</div>
+            <div  class="tpDIV">
+                 <form method="post" action="#" id="testFormTools_formSerialize1">
+                     <input type="text" name="c" value="zhangsan" readonly="readonly"/>
+                     <input type="text" name="b" value="lisi" readonly="readonly"/>
+                     <input type="text" name="a" value="wangwu" readonly="readonly"/>
+                     <input type="submit" value="提交" />
+                 </form>
+                 <div>方法返回结果为:<span id="formSerialize1UpdateArea"></span></div>
+            </div>
+       </div>
+       
+       <div  class="testPoint">
+            <span class="title">功能测试点3：测试$.fn.fieldSerialize()功能</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">不选中checkbox点击按钮返回c=txt，选中checkbox点击按钮，返回c=txt&b=M</div>
+            <div  class="tpDIV">
+                 <form method="post" action="#" id="testFormTools_fieldSerialize2">
+                     <input type="text" name="c" value="txt" readonly="readonly"/>
+                     <input type="checkbox" name="b" value="M" readonly="readonly"/>M
+                     <span>文字</span>
+                     <input type="submit" name="but" value="submit"/>
+                 </form>
+                 <div>方法返回结果为:<span id="fieldSerialize2UpdateArea"></span></div>
+            </div>
+       </div>
+       
+       <div  class="testPoint">
+            <span class="title">功能测试点4：测试$.fn.fieldValue()功能</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击按钮1按钮右边输出["txt"]，点击按钮2如果checkbox没选中按钮右边输出[]如果checkbox选中按钮右边输出["M"]，点击按钮2按钮右边输出[]。</div>
+            <div  class="tpDIV">
+                 <form method="post" action="#" id="testFormTools_fieldValue2">
+                    <div>下面调用方法时方法参数为true</div>
+                    <input type="text" name="c" value="txt" readonly="readonly" style="width:25px"/>
+                     <input type="submit" value="提交" onclick="$('#fieldValue21').html(JSON.stringify($(this).prev().fieldValue()));return false;"/>
+                     fieldValue:<span id="fieldValue21"></span><br/>
+                     <input type="checkbox" name="b" value="M" readonly="readonly"/>M
+                     <input type="submit" value="提交" onclick="$('#fieldValue22').html(JSON.stringify($(this).prev().fieldValue()));return false;"/>
+                     fieldValue:<span id="fieldValue22"></span><br/>
+                     <span>文字</span>
+                     <input type="submit" value="提交" onclick="$('#fieldValue23').html(JSON.stringify($(this).prev().fieldValue()));return false;"/>
+                     fieldValue:<span id="fieldValue23"></span><br/>
+                 </form>
+            </div>
+       </div>
+       
+       <div class="testPoint">
+            <span class="title">功能测试点5：测试$.fn.clearForm()功能</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击按钮，所有输入框的已有值会被清空</div>
+            <div class="tpDIV">
+                 <form method="post" action="#" id="testFormTools_clearForm">
+                     <input type="text" name="c" value="txt" />
+                     <input type="checkbox" name="b" value="M" checked="checked"/>
+                     <input type="radio" name="c" value="1" checked="checked"/>
+                     <select>
+                        <option>1</option>
+                        <option selected="selected">2</option>
+                        <option>3</option>
+                     </select>
+                     <input type="submit" value="提交" onclick="$('#testFormTools_clearForm').clearForm();return false;"/>
+                 </form>
+            </div>
+       </div>
+       
+       <div  class="testPoint">
+            <span class="title">功能测试点6：测试$.fn.clearFields()功能</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点击按钮，所有input输入框（包括文本输入框、checkBox、radio）的值会被清空，而非input输入框（包括下拉列表框select）的值不会被清空。</div>
+            <div class="tpDIV">
+                 <form method="post" action="#" id="testFormTools_clearFields">
+                     <input type="text" name="c" value="txt" />
+                     <input type="checkbox" name="b" value="M" checked="checked"/>
+                     <input type="radio" name="c" value="1" checked="checked"/>
+                     <select>
+                        <option>1</option>
+                        <option selected="selected">2</option>
+                        <option>3</option>
+                     </select>
+                     <input type="submit" value="提交" onclick="$(this).siblings('input').clearFields();return false;"/>
+                 </form>
+            </div>
+       </div>
+       
+       <div  class="testPoint">
+            <span class="title">功能测试点7：测试$.fn.resetForm()功能</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">随意修改输入框、checkbox、radio、select的值，然后点击按钮，输入框的值会变成txt，checkbox会被选中，第1个radio会未选中，第二个radio会选中，select的值会变成2。</div>
+            <div class="tpDIV">
+                 <form method="post" action="#" id="testFormTools_resetForm">
+                     <input type="text" name="c" value="txt" />
+                     <input type="checkbox" name="b" value="M" checked="checked"/>M
+                     <input type="radio" name="c" value="1" />1
+                     <input type="radio" name="c" value="2" checked="checked"/>2
+                     <select>
+                        <option>1</option>
+                        <option selected="selected">2</option>
+                        <option>3</option>
+                     </select>
+                     <input type="submit" value="提交" onclick="$('#testFormTools_resetForm').resetForm();return false;"/>
+                 </form>
+            </div>
+       </div>
+       
+       <div  class="testPoint">
+            <span class="title">功能测试点8：测试$.fn.enable(boolean enabled)功能</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点按钮1，text/checkbox/radio会被disabled，点按钮2，text/checkbox/radio会被enabled。点按钮3，select会被disabled，点按钮4，select会被enabled。</div>
+            <div class="tpDIV">
+                 <form method="post" action="#" id="testFormTools_enable">
+                     <input type="text" name="c" value="txt" />
+                     <input type="checkbox" name="b" value="M" checked="checked"/>M
+                     <input type="radio" name="c" value="1" />1
+                     <input type="radio" name="c" value="2" checked="checked"/>2
+                     <select>
+                        <option>1</option>
+                        <option selected="selected">2</option>
+                        <option>3</option>
+                     </select>
+                     <button onclick="$(this).siblings('input').enable(false);return false;">禁用text/checkbox/radio</button>
+                     <button onclick="$(this).siblings('input').enable(true);return false;">启用text/checkbox/radio</button>
+                     <button onclick="$(this).siblings('select').enable(false);return false;">禁用select</button>
+                     <button onclick="$(this).siblings('select').enable(true);return false;">启用select</button>
+                 </form>
+            </div>
+       </div>
+       
+       <div  class="testPoint">
+            <span class="title">功能测试点9：测试$.fn.selected(boolean selected)功能</span>
+            <br />
+            <p>操作和预期结果：</p>
+            <div class="textresult">点按钮1，checkbox/radio会会变成选中状态，点按钮2，checkbox/radio会变成未选中状态。</div>
+            <div class="tpDIV">
+                 <form method="post" action="#" id="testFormTools_enable">
+                     <input type="text" name="c" value="txt" />
+                     <input type="checkbox" name="b" value="M" checked="checked"/>M
+                     <input type="radio" name="c" value="1" />1
+                     <button onclick="$(this).siblings('input').selected(true);return false;">选择checkbox和radio</button>
+                     <button onclick="$(this).siblings('input').selected(false);return false;">去掉checkbox和radio的选择</button>
+                 </form>
+            </div>
+       </div>
+	</div>
+	
+	<!-- 下面是边界值测试的相关代码 -->
+	<div id="tabs-3">
+		<div  class="testPoint">
+			<span class="title">无边界值测试</span>
+	   </div>
+	</div>
+</div>
+
+	
+</body> 
+</html>

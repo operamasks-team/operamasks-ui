@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Operamasks UI uint test suite</title>
+
+	<script src="../../jquery.js"></script>
+
+	<link rel="stylesheet" href="common/css/qunit.css">
+	<link rel="stylesheet" href="common/css/subsuiteRunner.css">
+	<script src="common/js/qunit.js"></script>
+	<script src="common/js/subsuiteRunner.js"></script>
+	
+	
+	<script src="common/js/qunit-junit-outputter.js"></script>
+	<script>
+	(function() {
+
+	var params = [],
+		suites = [
+			"omaccordion/accordion.html",
+			"omajaxsubmit/ajaxsubmit.html",
+			"ombutton/button.html",
+			"omcalendar/calendar.html",
+			"omcombo/combo.html",
+			"omdialog/dialog.html",
+			"omdraggable/draggable.html",
+			"omdroppable/droppable.html",
+			"omgrid/grid.html",
+			"ommenu/menu.html",
+			"ommessagebox/messagebox.html",
+			"ommessagetip/messagetip.html",
+			"omnumberfield/numberfield.html",
+			"omslider/slider.html",
+			"omsuggestion/suggestion.html",
+			"omtabs/tabs.html",
+			"omtree/tree.html",
+			"omvalidate/validate.html"
+		];
+
+	$.each( QUnit.urlParams, function( key, value ) {
+		if ( key === "filter" ) {
+			return;
+		}
+		params.push( encodeURIComponent( key ) + "=" + encodeURIComponent( value ) );
+	});
+	if ( params.length ) {
+		params = "?" + params.join( "&" );
+		suites = $.map( suites, function( suite ) {
+			return suite + params;
+		});
+	}
+	QUnit.testSuites( suites );
+
+	}());
+	</script>
+</head>
+<body>
+
+<h1 id="qunit-header">Operamasks UI unit test suites</h1>
+<h2 id="qunit-banner"></h2>
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-fixture">
+
+</div>
+</body>
+</html>

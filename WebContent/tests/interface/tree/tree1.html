@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>operamasks-ui tree tests</title> 
+<script type="text/javascript" src="../../../jquery.js"></script> 
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="../../../ui/om-panel.js" ></script> 
+<script type="text/javascript" src="../../../ui/om-tabs.js" ></script> 
+<script type="text/javascript" src="../../../tests/common/js/test.js" ></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.draggable.js"></script>
+<script type="text/javascript" src="../../../ui/jquery.ui.droppable.js"></script>
+<script type="text/javascript" src="../../../ui/om-tree.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/om-all.css" /> 
+<link rel="stylesheet" type="text/css" href="../../common/css/test-all.css" />
+
+<script type="text/javascript">
+$(document).ready(function() {
+    /* $("#tree1").omTree({
+         initExpandLevel : 2,
+         dataSource:[
+                     {id:'root',
+                      text:'root',
+                      children:[{id:'n1',text:'node1'},
+                             {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                             {id:'n3',text:'node3'}
+                      ]}]
+         
+     });
+     
+     $("#tree2").omTree({
+        dataSource:[
+           {id:'root',
+            text:'root',
+            children:[{id:'n1',text:'node1'},
+                   {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                   {id:'n3',text:'node3'}
+            ]}]
+     });
+     
+     $("#tree5").omTree({
+         dataSource:[
+            {id:'root',
+             text:'root',
+             children:[{id:'n1',text:'node1'},
+                    {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                    {id:'n3',text:'node3'}
+             ]}],
+         lineHover : true
+      });
+     $("#tree6").omTree({
+         dataSource:[
+                     {id:'root',
+                      text:'root',
+                      children:[{id:'n1',text:'node1'},
+                             {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                             {id:'n3',text:'node3'}
+                      ]}],
+         showIcon : false
+      });
+     $("#tree7").omTree({
+         dataSource:[
+            {id:'root',
+             text:'root',
+             children:[{id:'n1',text:'node1'},
+                    {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                    {id:'n3',text:'node3'}
+             ]}],
+         showLine : false
+      });
+     $("#tree8").omTree({
+         dataSource:[
+            {id:'root',
+             text:'root',
+             children:[{id:'n1',text:'node1'},
+                    {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                    {id:'n3',text:'node3'}
+             ]}],
+         disabled : true
+      });
+     
+     $("#tree9").omTree({
+         showCheckbox:true,
+         dataSource:[
+            {id:'root',
+             text:'root',
+             children:[{id:'n1',text:'node1'},
+                    {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                    {id:'n3',text:'node3'}
+             ]}]
+      });
+      $("#tree10").omTree({
+          showCheckbox:true,
+          cascadeCheck:false,
+          dataSource:[
+             {id:'root',
+              text:'root',
+              children:[{id:'n1',text:'node1'},
+                     {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                     {id:'n3',text:'node3'}
+              ]}]
+           
+       });
+      $("#tree11").omTree({
+          draggable:true,
+          dataSource:[
+             {id:'root',
+              text:'root',
+              children:[{id:'n1',text:'node1'},
+                     {id:'n2',text:'node2',children:[{id:'n21',text:'node21'},{id:'n22',text:'node22'}]},
+                     {id:'n3',text:'node3'}
+              ]}]
+       });
+      $("#tree12").omTree({
+          dataSource:'../../../omTree.json',
+           filter: function(){
+               var a=[{id:'n1',text:'node1'},{id:'n2',text:'node2'}];
+               return a;
+           }
+       });
+       */
+});
+
+</script>
+<style>
+.VPDIV {
+	width: 400px;
+	height: 200px;
+}
+</style>
+</head>
+<body>
+	   <!--  <div  class="testPoint">
+			<span class="title">属性测试点1：测试initExpandLevel属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      暂不支持（当前树初始只展开一级子节点。）
+			</div>
+			<div  class="tpDIV VPDIV">
+			    <ul id="tree1">
+                </ul>
+			</div>
+	   </div>
+	   <div class="testPoint">
+			<span class="title">属性测试点2：测试dataSource属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      当前树正常展示。
+			</div>
+			<div  class="tpDIV VPDIV">
+			<ul id="tree2"></ul>
+			</div>
+	   </div>
+	   <div  class="testPoint">
+			<span class="title">属性测试点5：测试lineHover属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      暂不支持（鼠标划过树节点时高亮）
+			</div>
+			<div class="tpDIV VPDIV">
+			<ul id="tree5"></ul>
+			</div>
+	   </div>
+	   <div class="testPoint">
+			<span class="title">属性测试点6：测试showIcon属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      当前树节点前不展示图标
+			</div>
+			<div class="tpDIV VPDIV">
+			    <ul id="tree6">
+                </ul>
+			</div>
+	   </div>
+	  <div class="testPoint">
+			<span class="title">属性测试点7：测试showLine属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      暂不支持（当前树节点与节点之间没有连线）
+			</div>
+			<div class="tpDIV VPDIV">
+			<ul id="tree7"></ul>
+			</div>
+	   </div>
+	   <div class="testPoint">
+			<span class="title">属性测试点8：测试disabled属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      暂不支持（当前树不可用）
+			</div>
+			<div class="tpDIV VPDIV">
+			<ul id="tree8"></ul>
+			</div>
+	   </div>
+	   <div  class="testPoint">
+			<span class="title">属性测试点9：测试showCheckBox属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      当前树是否可通过勾选框进行多选。
+			</div>
+			<div  class="tpDIV VPDIV">
+			<ul id="tree9"></ul>
+			</div>
+	   </div>
+	   <div class="testPoint">
+			<span class="title">属性测试点10：测试cascadeCheck属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      当选中子节点时，其父节点不会被选中。
+			</div>
+			<div  class="tpDIV VPDIV">
+			<ul id="tree10"></ul>
+			</div>
+	   </div>
+	   <div class="testPoint">
+			<span class="title">属性测试点11：测试draggable属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      树节点可以进行拖拽
+			</div>
+			<div  class="tpDIV VPDIV">
+			<ul id="tree11"></ul>
+			</div>
+	   </div>
+	    <div class="testPoint">
+			<span class="title">属性测试点12：测试filter属性</span>
+			<br />
+			<p>操作和预期结果：</p>
+			<div class="textresult">
+			      暂不支持（“node1”节点不显示）
+			</div>
+			<div  class="tpDIV VPDIV">
+			<ul id="tree12"></ul>
+			</div>
+	   </div>
+  -->
+</body>
+</html>
